@@ -11,4 +11,12 @@ CREATE TABLE IF NOT EXISTS signatures(
   signed timestamp with time zone not null default current_timestamp
 );
 
+DROP TABLE IF EXISTS users;
+
 -- TODO setja inn töflu fyrir notendur
+CREATE TABLE IF NOT EXISTS users(
+    id serial primary key,
+    username character varying(255) not null unique,
+    password character varying(255) not null, 
+    admin boolean not null default false
+);

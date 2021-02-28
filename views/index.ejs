@@ -2,6 +2,11 @@
 
 <h1>Undir&shy;skriftar&shy;listi</h1>
 
+<% if (loggedin) { %>
+<p>Innskráður sem admin</p>
+<a href="/admin/logout">Útskráning</a>
+<% } %>
+
 <%- include('form') -%>
 
 <%- include('list') -%>

@@ -1,2 +1,41 @@
+<section class="registrations">
+  <h2 class="registrations__title">Undirskriftir</h2>
 
-
+  <% if (result.items.length === 0) { %>
+    <p class="registrations__empty">Engar undirskriftir.</p>
+  <% } else { %>
+  <p>Fjöldi undirskrifta: <%= result.numberOfSignatures %></p>
+    <table class="registrations__table" cellpadding="0">
+      <tr>
+        <th>Dags</th>
+        <th>Nafn</th>
+        <th>Athugasemd</th>
+        <% if (loggedin) { %>
+        <th>Eyða</th>
+        <% } %>
+      </tr>
+      <% result.items.forEach((row) => { %>
+        <tr>
+          <td class="date"><%= formatDate(row.signed) %></td>
+          <td class="name"><%= row.anonymous ? 'Nafnlaust' : row.name %></td>
+          <td class="comment"><%= row.comment %></td>
+          <% if (loggedin) { %>
+          <td class="delete"><button>Eyða</button></td>
+          <% } %>
+        </tr>
+      <% }) %>
+      </tr>
+    </table>
+  <% } %>
+  <% if (result.page === 1) { %>
+  <p>Fyrri síða</p>
+  <% } else { %>
+  <a href="<%= result._links.prev.href %>">Fyrri síða</a>
+  <% } %>
+  <p>Síða <%= result.page %> af <%= result.numberOfPages %></p>
+  <% if (result.page === result.numberOfPages) { %>
+  <p>Næsta síða<p>
+  <% } else { %>
+  <a href="<%= result._links.next.href %>">Næsta síða</a>
+  <% } %>
+</section>
