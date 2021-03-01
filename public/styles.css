@@ -74,6 +74,11 @@ form {
   border-bottom: 2px dotted var(--color-accent)
 }
 
+.delete button {
+  font-size: 1rem;
+  margin: 0;
+}
+
 .field {
   display: flex;
   align-items: center;
@@ -154,6 +159,14 @@ button:hover {
   margin-top: 1rem;
 }
 
+.login--info {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
 .registrations {
   margin-bottom: 2rem;
 }
@@ -165,6 +178,11 @@ button:hover {
 
 .registrations__empty {
   text-align: center;
+}
+
+.registrations__number {
+  text-align: center;
+  margin: 1.5rem;
 }
 
 .registrations__table {
@@ -186,4 +204,15 @@ button:hover {
   min-width: 150px;
   word-break: break-all;
   overflow-wrap: anywhere;
+}
+
+.pages {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user {
+  font-weight:bold;
 }

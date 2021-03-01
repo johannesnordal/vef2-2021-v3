@@ -2,17 +2,33 @@
 
 <h1>Innskráning</h1>
 
-<form method="post" action="/admin/login" enctype="application/x-www-form-urlencoded" autocomplete="off" class="form">
+<form method="post" action="/admin/login" enctype="application/x-www-form-urlencoded" class="form">
 
-  <div class="field">
+  <div class="field<%= locals.isInvalid('username', errors) ?  ' field--invalid' : '' %>">
     <label for="username">Notandanafn</label>
-    <input type="text" name="username" id="username">
+    <input type="text" name="username" id="username" value="<%= loginData.username %>">
   </div>
 
-  <div class="field">
+  <div class="field<%= locals.isInvalid('password', errors) ?  ' field--invalid' : '' %>">
     <label for="password">Lykilorð</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" value="<% loginData.password %>">
   </div>
+
+  <% if (errors.length > 0) { %>
+    <h2 class="errors__title">Villur við innskráningu:</h2>
+    <ul class="errors">
+      <% errors.forEach((error) => { %>
+        <li class="error"><label for="<%= error.param %>"><%= error.msg %></label></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <% if (message) { %> 
+    <h2 class="errors__title">Villur við innskráningu:</h2>
+    <ul class="errors">
+      <li class="error"><label><%= message %></label></li>
+    </ul>
+  <% } %>
 
   <button>Innskrá</button>
 

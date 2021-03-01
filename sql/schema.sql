@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS signatures(
   nationalId varchar(10) not null unique,
   comment varchar(400) not null,
   anonymous boolean not null default true,
-  signed timestamp with time zone not null default current_timestamp
+  signed DATE not null
 );
 
 DROP TABLE IF EXISTS users;

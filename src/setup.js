@@ -15,24 +15,42 @@ async function create() {
 
 function createFakeSignature() {
   let nationalId = '';
-  for (let i = 0; i < 10; i++) {
+
+  for (let i = 0; i < 10; i += 1) {
     nationalId += Math.floor(Math.random() * 10);
   }
-  let name = faker.name.findName();
+
+  const name = faker.name.findName();
+
   let comment = '';
+
   if (Math.random() < 0.5) {
     comment = faker.lorem.sentence();
   }
+
   let anonymous = '';
+
   if (Math.random() < 0.5) {
     anonymous = 'on';
   }
-  return { name, nationalId, comment, anonymous };
+
+  const signed = faker.date.recent(14, new Date());
+
+  const signature = {
+    name,
+    nationalId,
+    comment,
+    anonymous,
+    signed,
+  };
+
+  return signature;
 }
 
 async function addFakeSignatures() {
-  for (let i = 0; i <= 500; i++) {
+  for (let s = 0; s <= 500; s += 1) {
     const signature = createFakeSignature();
+    // eslint-disable-next-line no-await-in-loop
     await insert(signature);
   }
 

@@ -1,8 +1,7 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import xss from 'xss';
-import { list, insert } from './db.js';
-import { findByUsername } from './users.js';
+import { insert } from './db.js';
 import { catchErrors, form } from './utils.js';
 
 export const router = express.Router();
@@ -82,9 +81,10 @@ async function register(req, res) {
 
   let success = true;
 
+  const signed = new Date();
   try {
     success = await insert({
-      name, nationalId, comment, anonymous,
+      name, nationalId, comment, anonymous, signed,
     });
   } catch (e) {
     console.error(e);

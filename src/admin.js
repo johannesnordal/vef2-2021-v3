@@ -1,4 +1,5 @@
 import express from 'express';
+import { deleteSignature } from './db.js';
 import { catchErrors, form } from './utils.js';
 import { loginRouter, logoutRouter } from './login.js';
 
@@ -8,7 +9,7 @@ router.use('/login', loginRouter);
 router.use('/logout', logoutRouter);
 
 export async function admin(req, res) {
-  const { 
+  const {
     errors,
     formData,
     result,
@@ -20,6 +21,11 @@ export async function admin(req, res) {
   });
 }
 
+export async function adminDeleteSignature(req, res) {
+  await deleteSignature(req.params.id);
+  return res.redirect('/admin');
+}
+
 function ensureLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -28,3 +34,4 @@ function ensureLoggedIn(req, res, next) {
 }
 
 router.get('/', ensureLoggedIn, catchErrors(admin));
+router.post('/delete/:id', ensureLoggedIn, catchErrors(adminDeleteSignature));

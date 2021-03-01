@@ -34,17 +34,17 @@ export async function query(_query, values = []) {
 }
 
 export async function insert({
-  name, nationalId, comment, anonymous,
+  name, nationalId, comment, anonymous, signed,
 } = {}) {
   let success = true;
 
   const q = `
     INSERT INTO signatures
-      (name, nationalId, comment, anonymous)
+      (name, nationalId, comment, anonymous, signed)
     VALUES
-      ($1, $2, $3, $4);
+      ($1, $2, $3, $4, $5);
   `;
-  const values = [name, nationalId, comment, anonymous === 'on'];
+  const values = [name, nationalId, comment, anonymous === 'on', signed];
 
   try {
     await query(q, values);
@@ -60,9 +60,8 @@ export async function list(offset = 0, limit = 50) {
   let result = [];
   try {
     const queryResult = await query(`
-      SELECT name, nationalId, comment, anonymous, signed
-      FROM signatures ORDER BY signed DESC OFFSET $1 LIMIT $2`, [offset, limit]
-    );
+      SELECT id, name, nationalId, comment, anonymous, signed
+      FROM signatures ORDER BY signed DESC OFFSET $1 LIMIT $2`, [offset, limit]);
 
     if (queryResult && queryResult.rows) {
       result = queryResult.rows;
@@ -74,15 +73,25 @@ export async function list(offset = 0, limit = 50) {
   return result;
 }
 
+export async function deleteSignature(id) {
+  try {
+    await query(`
+      DELETE FROM signatures
+      WHERE id = $1`, [id]);
+  } catch (e) {
+    console.error(`Error deleting signature with id: ${id}`, e);
+  }
+}
+
 export async function countSignatures() {
   try {
     const result = await query(`
-      SELECT COUNT(*) AS count FROM signatures;`, [],
-    );
+      SELECT COUNT(*) AS count FROM signatures;`, []);
     return result.rows[0];
   } catch (e) {
     console.error('Error counting signatures', e);
   }
+  return null;
 }
 
 export async function end() {

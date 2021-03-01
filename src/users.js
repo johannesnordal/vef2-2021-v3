@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { query, end } from './db.js';
+import { query } from './db.js';
 
 export async function createUser(username, password, admin = false) {
   const hashedPassword = await bcrypt.hash(password, 11);
@@ -41,6 +41,8 @@ export async function findByUsername(username) {
   } catch (e) {
     console.error(`Fann ekki notanda með notandanafn: ${username}`, e);
   }
+
+  return null;
 }
 
 export async function findById(id) {
@@ -53,4 +55,6 @@ export async function findById(id) {
   } catch (e) {
     console.error(`Fann ekki notanda með id: ${id}`, e);
   }
+
+  return null;
 }

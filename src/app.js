@@ -31,7 +31,6 @@ app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
-  maxAge: 20 * 1000, // 20 sek
 }));
 
 const path = dirname(fileURLToPath(import.meta.url));
@@ -71,6 +70,10 @@ app.use((req, res, next) => {
 
 app.use('/', registrationRouter);
 app.use('/admin', adminRouter);
+
+app.post('/', (req, res) => {
+  res.send('delete');
+});
 
 // eslint-disable-next-line no-unused-vars
 function notFoundHandler(req, res, next) {
